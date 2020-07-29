@@ -1,13 +1,51 @@
 
-
 PowerShell Gallery Status
 =========================
-### The [PowerShell Gallery](https://powershellgallery.com) is currently:  __Operating Normally__
+### The [PowerShell Gallery](https://powershellgallery.com) is currently:  __Working Normally__
+
+### 6/11/2019 - PowerShellGallery.com is not responding
+
+__Status: Resolved__
+
+__Summary of Impact__: PowerShellGallery.com was unavailable between 8:15 AM and 11:15 AM Pacific Time. 
+
+__Root Cause__: This occurred because of a routine configuration update the previous day: we updated a password used for sending email. The new password contained a character which was not valid as part of a URL, but the script used to perform the update did not correctly escape the character. This meant that each service instance as it restarted would read the new configuration and fail to load. This would have been caught in the test gallery, but the script also silently failed to restart the service instances, so nothing went wrong immediately and the configuration change was applied to the production gallery as well. As each service instance restarted afterwards, it entered a failed state. At the start of the incident, the last instances restarted and the service became unavailable.
+
+__Resolution__: Changes have been made to the script and process used to roll out configuration changes to prevent this problem from recurring, and the service itself has also been made more robust against this kind of issue. 
+
+### 10/24/2018 - Some downloads failing with 'End of Central Directory Record Could not be found'
+
+__Status: Resolved__
+
+__Summary of Impact__: Users in some regions reported issues downloading some packages. The downloads reported an error similar to: "Install-Package : Package 'AzureRM.profile' failed to be installed because: End of Central Directory record could not be found.".
+
+This was due to an error in CDN configuration which lead to an invalid file being cached and served by some CDN regions. The issue is now believed resolved, please contact cgadmin@microsoft.com if you still see this problem.
 
 
-This page will be updated by the PowerShell Gallery operations team when there are issues identified for the PowerShell Gallery that affect its use. 
-The page will be updated as issues evolve, from reported to active to resolved. 
 
+### 9/13/2018 - Link to Facebook not working
+
+__Status: Resolved__
+
+__Summary of Impact__: The link from the package details pages to Facebook is not currently working. Root cause is being investigated. As a temporary workaround, users need to manually create entries in Facebook that link to their PowerShell Gallery items.
+
+__Root Cause__: Related to update to newer gallery version
+
+__Resolution__: Due to historical low usage, all the social media buttons (FaceBook, Twitter and LinkedIn) have been removed from the site.
+
+__Next Steps__: 
+
+### 9/13/2018 - Azure Automation integration was not working
+
+__Status: Resolved__
+
+__Summary of Impact__: The interaction between Azure Automation and PowerShell Gallery was broken temporarily. The links to the PowerShell Gallery from inside Azure Automation were not functioning. 
+
+__Root Cause__: A configuration change was applied to Azure Automation that corrected the issue.
+
+__Resolution__: Changes to data structures in the new PowerShell Gallery resulted in the Automation Gallery not being able to interpret the data. 
+
+__Next Steps__: A configuration change has been applied, the issue is resolved to the best of our knowledge. 
 
 
 ## History of previous issues
@@ -18,11 +56,11 @@ __Status: RESOLVED__
 
 __Summary of Impact__: The PowerShell Gallery experienced a period of very high latency, resulting in intermittent connection issues, beginning approximately 5pm (PDT) 10/10/17. While resolving the issue, the site was taken offline for 2 hours starting approximately 10pm (PDT). The site was restored shortly before midnight 10/10/2017. 
  
-__Root Cause__: The root cause of the high latency is still being investigated.
+__Root Cause__: 
 
 __Resolution__: The web services had to be taken offline and restored in order to address the primary issue. 
 
-__Next Steps__: The root cause for the original issue is being investigated.
+__Next Steps__: 
 
 ### 06/01/2017 - Deploy to Azure Automation Currently Unavailable
 
